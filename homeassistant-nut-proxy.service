@@ -1,0 +1,19 @@
+[Unit]
+Description=Publish NUT UPS status to Home Assistant MQTT
+Wants=network-online.target nut-server.service
+After=network-online.target nut-server.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=@RUN_USER@
+WorkingDirectory=@PROJECT_DIR@
+Environment=PYTHONUNBUFFERED=1
+ExecStart=@PYTHON@ -u @SCRIPT@
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
